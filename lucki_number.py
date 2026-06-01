@@ -18,5 +18,5 @@ while True:
             break                   
     else:        
         print(f"YOU LOST!!! It was {a}")
-        d = int(input("Try again: "))
+        b = int(input("Try again: "))
     
