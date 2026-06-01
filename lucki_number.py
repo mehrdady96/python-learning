@@ -20,7 +20,7 @@ while True:
     else:  
         Machine += 1
         print(f"YOU LOST!!! It was {a}\nHuman:{Human} ,Machine:{Machine}")
-        b = int(input("Try again or enter to exit: "))
+        b = (input("Try again or enter to exit: "))
         if b == '' :
             break
     
