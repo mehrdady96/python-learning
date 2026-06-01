@@ -18,5 +18,7 @@ while True:
             break                   
     else:        
         print(f"YOU LOST!!! It was {a}")
-        b = int(input("Try again: "))
+        b = int(input("Try again or enter to exit: "))
+        if b == '' :
+            break
     
