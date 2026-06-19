@@ -33,8 +33,8 @@ def check(adam, computer):
         return 'Balataaaaaar!!!'
 
 def get():
-    answer =  int(input("Enter youre guess here: "))
-    return int(answer)
+    return int(input("Enter youre guess here: "))
+   
 
 def win (human, computer_number):
     return human == computer_number
