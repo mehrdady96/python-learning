@@ -9,6 +9,16 @@ def welcome():
 def finish():
     print("Good game!!!")
     print(f"You founded the mahcine number and it was {computer_number} !!!")
+    print()
+    answer = input("Do you want to try again?(Y/N)??? ")
+    if answer.upper() == "Y":
+        return True
+    else:
+        return False
+
+
+def win (guess,computer_number):
+    return guess == computer_number
 
 
 def check(adam, computer):
@@ -23,19 +33,23 @@ def check(adam, computer):
         return 'Balataaaaaar!!!'
 
 def get():
-    return int(input("Enter youre number here: "))
-    
+    answer =  int(input("Enter youre guess here: "))
+    return int(answer)
 
 def win (human, computer_number):
     return human == computer_number
 
-import random 
-computer_number = random.randint(1,9)
 
 
-while True:
-    user = get()
-    print(check(user,computer_number))
-    if user == computer_number:
-        finish()
-        break
+welcome()
+continue_playing = True
+
+while (continue_playing):
+        user = 0
+        import random 
+        computer_number = random.randint(1,9)
+        while (not win(user,computer_number)):
+            user = get()
+            print(check(user,computer_number))
+            if user == computer_number:
+               continue_playing = finish()
