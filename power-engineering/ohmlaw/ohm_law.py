@@ -14,8 +14,8 @@ class OhmLaw:
         """
         if resistance <= 0:
             raise ValueError("Resistance must be greater than Zero")
-    
-    def voltage(self , current , resistance):
+
+    def voltage(self, current, resistance):
         """
         calculates V from I * R
         """
@@ -34,19 +34,23 @@ class OhmLaw:
         """
         calculates R from V / I
         """
-        
-        if current == 0 :
+
+        if current == 0:
             raise ValueError("I cannot be Zero")
-        
+
         return voltage / current
 
-    def power(self , voltage = None , current = None , resistance = None):
-        if voltage is None :
+    def power(self, voltage=None, current=None, resistance=None):
+        """
+        claculates P from existed data
+        """
+        if voltage is None:
             return resistance * current * current
-        if current is None :
-            return  voltage * voltage / resistance
-        if resistance is None :
+        if current is None:
+            return voltage * voltage / resistance
+        if resistance is None:
             return voltage * current
-        if voltage is not None and current is not None and resistance is not None :
+        if voltage is not None and current is not None and resistance is not None:
             return voltage * current
-        
+        else:
+            raise TypeError("incomplte inputs")
