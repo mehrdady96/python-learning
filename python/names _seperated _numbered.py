@@ -1,5 +1,5 @@
 '''
-
+counts evert letter in name
 '''
 
 names = ['mehrdad', 'ali', 'kimia']
