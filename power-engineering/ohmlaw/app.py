@@ -1,7 +1,8 @@
 """
-gets the input from user and sends to ohmlaw modulde for calculation
+get's the input from user and sends to ohmlaw modulde for calculation
 """
-from OhmsLaw import OhmLaw
+
+from ohm_law import OhmLaw
 
 
 def get_message(message):
@@ -15,26 +16,26 @@ def get_message(message):
             print(" invalid input . enter a valid number")
 
 
-def get_input(user):
+def get_input(choice):
     """
     having inouts in one function to avoid reaption
-    """  
-    if user == "v":
+    """
+    if choice == "v":
         current = get_message(" enter current : ")
         resistance = get_message(" enter resistance : ")
-        return current , resistance
-    
-    if user == "r":
+        return current, resistance
+
+    if choice == "r":
         current = get_message(" enter current : ")
         voltage = get_message(" enter voltage : ")
-        return current , voltage
-    
-    if user == "c" :
+        return current, voltage
+
+    if choice == "c":
         resistance = get_message(" enter resistance : ")
         voltage = get_message(" enter voltage : ")
-        return resistance , voltage
-
-
+        return resistance, voltage
+    else:
+        raise ValueError("Invalid tool")
 
 def welcome():
     """
@@ -49,37 +50,46 @@ def tools_selector():
     """
     user can select tools
     """
-    print(" "
-    "[V] Calculate Voltage " \
-    "\n [I] Calculate Current " \
-    "\n [R] Calculate Resistance " \
-    "\n [Q] Quit")
-    user = input(" enter here : ")
-    return user
+    print(
+        " "
+        "[V] Calculate Voltage "
+        "\n [I] Calculate Current "
+        "\n [R] Calculate Resistance "
+        "\n [Q] Quit"
+    )
+    choice = input(" enter here : ")
+    return choice
 
-def tools(user):
+
+def tools(choice):
     """
-    selects the correct tool for user
+    selects the correct tool for choice
     """
-   
-    if user == "v":
-        current , resistance = get_input(user)
-        voltage = ohm.voltage(current , resistance)
-        return (f"\n voltage is {voltage} V")
-    
-    if user == "r":
-        current , voltage = get_input(user)
-        resistance = ohm.resistance(voltage , current)
-        return (f"\n resistance is {resistance} KΩ")
-    
-    if user == "c":
-        resistance , voltage = get_input(user)
-        current = ohm.current(voltage , resistance)
-        return (f"\n current is {current} mA")   
-     
-    if user == "p":
-        power = ohm.power(current , resistance , voltage)
-        return (f"\n power is {power} KW")
+
+    if choice == "v":
+        current, resistance = get_input(choice)
+        voltage = ohm.voltage(current, resistance)
+        return f"\n voltage is {voltage} V"
+
+    if choice == "r":
+        current, voltage = get_input(choice)
+        resistance = ohm.resistance(voltage, current)
+        return f"\n resistance is {resistance} KΩ"
+
+    if choice == "c":
+        resistance, voltage = get_input(choice)
+        current = ohm.current(voltage, resistance)
+        return f"\n current is {current} mA"
+
+        """
+    if choice == "p":
+        power = ohm.power(current, resistance, voltage)
+        return f"\n power is {power} KW"
+        """
+
+    else:
+        raise ValueError("Invalid choice")
+
 
 ohm = OhmLaw()
 welcome()
