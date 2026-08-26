@@ -1,5 +1,5 @@
 """
-get's the input from user and sends to ohmlaw modulde for calculation
+gets the input from user and sends to ohmlaw modulde for calculation
 """
 from OhmsLaw import OhmLaw
 
