@@ -3,6 +3,8 @@
 Created on Mon Jun  8 12:54:50 2026
 
 @author: mad man
+
+sorts the data of donations
 """
 
 
