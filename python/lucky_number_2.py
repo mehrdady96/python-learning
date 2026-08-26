@@ -1,6 +1,8 @@
 """
 created on Friday june 3:18 19/06/2026
 @athur : MadMAn
+
+user guesses a random number
 """
 def welcome():
     '''
