@@ -10,15 +10,7 @@ class Blackjack():
         """
         checks the value of each card
         """
-        if card == 1:
-            card = 'A'
-        if card == 10 :
-            card = 'K'
-        if card == 11:
-            card = 'Q'
-        if card == 12:
-            card = 'J'
-        value = {'A' : 1 ,
+        value = { 1 : 'A' ,
                 2 : 2 , 
                 3 : 3 ,
                 4 : 4 , 
@@ -27,36 +19,37 @@ class Blackjack():
                 7 : 7 ,
                 8 : 8 ,
                 9 : 9 ,
-                'K' : 10 ,
-                'Q' : 10 , 
-                'J' : 10 ,
+                10 : 'K' ,
+                11 : "Q" , 
+                12 : 'J' ,
                 }
         return value[card]
 
 
-    def value_of_ace(self, card_one , card_two):
-        """
-        checks value of ace
-        """
-        if Blackjack.draw_card(card_one) + Blackjack.draw_card(card_two) <= 10 and not(card_one == 1 or card_two == 1 ) :
-            ace = 11
-        elif  Blackjack.draw_card(card_one) + Blackjack.draw_card(card_two) > 10 or (card_one == 1 or card_two == 1 ):
-            ace = 1
-        return ace
-
-
     def check_value(self,deck):
+        replacement = {
+             "A" : 1 ,
+             "K" : 10,
+             "Q" : 10,
+             "J" : 10
+        }
+        
         aces = 0
-        total = sum(deck)
-        aces = deck.count(1)
+        total = 0
+        for card in deck:
+             if card in replacement :
+                  total += replacement[card]
+             else:
+              total += card
+        aces = deck.count("A")
         if aces == 1 and total + 10 <= 21:
             total += 10
         return total
 
 
-    def check_status(slef, player_cards , house_cards) :
-        player = sum(player_cards)
-        house = sum(house_cards)
+    def check_status(self, player_cards , house_cards) :
+        player = self.check_value(player_cards)
+        house = self.check_value(house_cards)
         status = ''
         if house > 21 :
             if player <= 21 :
@@ -76,7 +69,7 @@ class Blackjack():
         if house == 17 :
             if player > 21 :
                     status = "House"
-            if player == 21 :
+            elif player == 21 :
                     status = "Player"
             else :
                     status = "seventeen"
@@ -86,113 +79,120 @@ class Blackjack():
 
 
 
-blackjack = Blackjack()
-playing = True
-print(" Welcome to MADMAN Casino")
-while playing:
-    player_cards = [blackjack.draw_card(randint(1,12)) , blackjack.draw_card(randint(1,12))]
-    house_cards = [blackjack.draw_card(randint(1,12)) , blackjack.draw_card(randint(1,12))]
-    the_status = blackjack.check_status(player_cards , house_cards)
-    print("==========================")
-    print(f"Yare has drawn card")
-    print(f" {player_cards = } , {house_cards = }")
-    choice = ""
-    while choice not in ("H", "S"):
-        choice = input(" Hit or Stand ?:(H/S) ").upper()
+
+def run():
+    blackjack = Blackjack()
+    playing = True
+    print(" Welcome to MADMAN Casino")
+    while playing:
+
+        player_cards = [blackjack.draw_card(randint(1,12)) , blackjack.draw_card(randint(1,12))]
+        house_cards = [blackjack.draw_card(randint(1,12)) , blackjack.draw_card(randint(1,12))]
+        the_status = blackjack.check_status(player_cards , house_cards)
+        print("==========================")
+        print(f"Yara has drawn card")
+        print(f" {player_cards = } , {house_cards = }")
+        choice = ""
+        while choice not in ("H", "S"):
+            choice = input(" Hit or Stand ?:(H/S) ").upper()
 
 
-    while True :
-        if choice == "H" :
-            if the_status == "seventeen" :
-                while True :
+        while True :
+            if choice == "H" :
+                if the_status == "seventeen" :
+                    while True :
+                            player_cards.append(blackjack.draw_card(randint(1,12)))
+                            the_status = blackjack.check_status(player_cards , house_cards)
+                            if the_status == "Player" :
+                                print("==========================")
+                                print(f" Player won")
+                                print(f" { (player_cards) = } , {(house_cards) = }")
+                                break
+                            if the_status == "House" :
+                                print("==========================")
+                                print(f" House won")
+                                print(f" { (player_cards) = } , {(house_cards) = }")
+                                break
+                if the_status == "Player":
+                    print("==========================")
+                    print(f" Player won")
+                    print(f" { (player_cards) = } , {(house_cards) = }") 
+                    break
+                if the_status == "Busted":
+                    house_cards.pop()
+                    print("==========================")
+                    print(f" House won")
+                    print(f" { (player_cards) = } , {(house_cards) = }") 
+                    break
+                if the_status == "Pushed":
+                    print("==========================")
+                    print(f" PUSHED")
+                    print(f" { (player_cards) = } , {(house_cards) = }")
+                    break
+                if the_status == "House":
+                    print("==========================")
+                    print(f" House won")
+                    print(f" { (player_cards) = } , {(house_cards) = }")
+                    break
+
+                player_cards.append(blackjack.draw_card(randint(1,12)))
+                house_cards.append(blackjack.draw_card(randint(1,12)))
+                the_status = blackjack.check_status(player_cards , house_cards)
+
+
+            if choice == "S" :
+                if the_status == "seventeen" :
+                    while True :
                         player_cards.append(blackjack.draw_card(randint(1,12)))
                         the_status = blackjack.check_status(player_cards , house_cards)
                         if the_status == "Player" :
                             print("==========================")
                             print(f" Player won")
-                            print(f" {player_cards = } , {house_cards = }")
+                            print(f" { (player_cards) = } , {(house_cards) = }")
                             break
                         if the_status == "House" :
                             print("==========================")
                             print(f" House won")
-                            print(f" {player_cards = } , {house_cards = }")
+                            print(f" { (player_cards) = } , {(house_cards) = }")
                             break
-            if the_status == "Player":
-                print("==========================")
-                print(f" Player won")
-                print(f" {player_cards = } , {house_cards = }") 
-                break
-            if the_status == "Busted":
-                house_cards.pop()
-                print("==========================")
-                print(f" House won")
-                print(f" {player_cards = } , {house_cards = }") 
-                break
-            if the_status == "Pushed":
-                print("==========================")
-                print(f" PUSHED")
-                print(f" {player_cards = } , {house_cards = }")
-                break
-            if the_status == "House":
-                print("==========================")
-                print(f" House won")
-                print(f" {player_cards = } , {house_cards = }")
-                break
-
-            player_cards.append(blackjack.draw_card(randint(1,12)))
-            house_cards.append(blackjack.draw_card(randint(1,12)))
-            the_status = blackjack.check_status(player_cards , house_cards)
-
-
-        if choice == "S" :
-            if the_status == "seventeen" :
-                while True :
-                    player_cards.append(blackjack.draw_card(randint(1,12)))
-                    the_status = blackjack.check_status(player_cards , house_cards)
-                    if the_status == "Player" :
-                        print("==========================")
-                        print(f" Player won")
-                        print(f" {player_cards = } , {house_cards = }")
-                        break
-                    if the_status == "House" :
-                        print("==========================")
-                        print(f" House won")
-                        print(f" {player_cards = } , {house_cards = }")
-                        break
-            if the_status == "Player":
-                print("==========================")
-                print(f" Player won")
-                print(f" {player_cards = } , {house_cards = }") 
-                break
-            if the_status == "Busted":
-                house_cards.pop()
-                print("==========================")
-                print(f" House won")
-                print(f" {player_cards = } , {house_cards = }") 
-                break
-            if the_status == "Pushed":
-                print("==========================")
-                print(f" PUSHED")
-                print(f" {player_cards = } , {house_cards = }")
-                break
-            if the_status == "House":
-                print("==========================")
-                print(f" House won")
-                print(f" {player_cards = } , {house_cards = }")
-                break
-            house_cards.append(blackjack.draw_card(randint(1,12)))
-            the_status = blackjack.check_status(player_cards , house_cards)
-    choice = input(" Press Enter to play")
-    if choice == '':
-         pass
-    else :
-         tip = False
-         mind = input(" Did you tipped Yara ? >:( ")
-         while not tip :
-                if mind == "yes":
-                    print(" Thank you")
-                    input(" Goodbye :)")
-                    playing = False
+                if the_status == "Player":
+                    print("==========================")
+                    print(f" Player won")
+                    print(f" { (player_cards) = } , {(house_cards) = }") 
                     break
-                else :
-                     mind = input(" Did you tipped Yara ? >:( ")
+                if the_status == "Busted":
+                    house_cards.pop()
+                    print("==========================")
+                    print(f" House won")
+                    print(f" { (player_cards) = } , {(house_cards) = }") 
+                    break
+                if the_status == "Pushed":
+                    print("==========================")
+                    print(f" PUSHED")
+                    print(f" { (player_cards) = } , {(house_cards) = }")
+                    break
+                if the_status == "House":
+                    print("==========================")
+                    print(f" House won")
+                    print(f" {(player_cards) = } , {(house_cards) = }")
+                    break
+                house_cards.append(blackjack.draw_card(randint(1,12)))
+                the_status = blackjack.check_status(player_cards , house_cards)
+        choice = input(" Press Enter to play , (no for exit)")
+        if choice == '':
+            pass
+        else :
+            tip = False
+            mind = input(" Did you tipped Yara ? >:( ")
+            while not tip :
+                    if mind == "yes":
+                        print(" Thank you")
+                        input(" Goodbye :)")
+                        playing = False
+                        break
+                    else :
+                        mind = input(" Did you tipped Yara ? >:( ")
+
+
+if __name__  == "main":
+     run()
